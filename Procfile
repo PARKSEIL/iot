@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -cp target/classes:chpak/iot/wavefinder/core/boot/SpringBootConfiguration
