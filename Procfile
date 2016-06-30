@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:chpak/iot/wavefinder/core/boot/SpringBootConfiguration
+web: java $JAVA_OPTS -jar target/dependency:iot.wavefinder.core-0.0.1-SNAPSHOT.jar
