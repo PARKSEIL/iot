@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import chpak.iot.wavefinder.core.constants.MqttClientConstants;
@@ -25,7 +26,7 @@ public class RelayController {
 		return returnTxt;
 	}
 	
-	@RequestMapping("")
+	@RequestMapping(method=RequestMethod.POST)
 	public @ResponseBody String defaultController(HttpServletRequest request, HttpServletResponse response) {
 		return "Welcome Chpak' World";
 	}
