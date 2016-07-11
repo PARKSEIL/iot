@@ -4,7 +4,10 @@ public class MqttClientConstants {
 
 	public static final String TOPIC_KEY="topic";
 	public static final String MESSAGE_KEY="message";
-	public static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
+//	public static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
+	public static final String BROKER_URL = "tcp://m12.cloudmqtt.com:19349";
+	public static final String BROKER_ID = "yvtokfdl";
+	public static final String BROKER_PAWSSWD = "620B8Piz7hM_";
 	public static final String CLIENT_ID_KEY="clientId";
 	public static final String QOS_KEY = "qos";
 }

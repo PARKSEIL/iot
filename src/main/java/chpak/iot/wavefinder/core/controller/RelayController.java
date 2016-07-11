@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,12 +35,15 @@ public class RelayController {
 	@RequestMapping("tag")
 	public @ResponseBody String requestFromTwitt(HttpServletRequest request, HttpServletResponse response) {
 		MqttClientVO vo = new MqttClientVO();
-//		ModelAndView mav = new ModelAndView();
 		
-		vo.setClientId(request.getParameter(MqttClientConstants.CLIENT_ID_KEY));
-		vo.setTopic(request.getParameter(MqttClientConstants.TOPIC_KEY));
-		vo.setMessage(request.getParameter(MqttClientConstants.MESSAGE_KEY));
-		vo.setQos(Integer.parseInt(request.getParameter(MqttClientConstants.QOS_KEY)));
+		String clientId = request.getParameter(MqttClientConstants.CLIENT_ID_KEY);
+		String topic = request.getParameter(MqttClientConstants.TOPIC_KEY);
+		String message = request.getParameter(MqttClientConstants.MESSAGE_KEY);
+		String qosStr = request.getParameter(MqttClientConstants.QOS_KEY);
+		vo.setClientId(StringUtils.isEmpty(clientId)?"":clientId);
+		vo.setTopic(StringUtils.isEmpty(topic)?"":topic);
+		vo.setMessage(StringUtils.isEmpty(message)?"":message);
+		vo.setQos(qosStr==null?0:Integer.parseInt(qosStr));
 		mqttClientService.callMosquitto(vo);
 		return "Publish Completed";
 	}

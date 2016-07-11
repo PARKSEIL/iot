@@ -78,8 +78,8 @@ public class MqttClientService {
 		connOpt = new MqttConnectOptions();
 		connOpt.setCleanSession(true);
 		connOpt.setKeepAliveInterval(30);
-//		connOpt.setUserName(M2MIO_USERNAME);
-//		connOpt.setPassword(M2MIO_PASSWORD_MD5.toCharArray());
+		connOpt.setUserName(MqttClientConstants.BROKER_ID);
+		connOpt.setPassword(MqttClientConstants.BROKER_PAWSSWD.toCharArray());
 	}
 	
 }
