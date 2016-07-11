@@ -33,7 +33,7 @@ public class MqttClientService {
             MqttTopic topicObj = client.getTopic(topic);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             MqttDeliveryToken token = null;
-            setConnOptiont(connOpts);
+            setConnOption(connOpts);
             log.info("[Topic : "+topic+"]");
             log.info("[Connecting to broker: "+broker+"]");
             
@@ -60,9 +60,11 @@ public class MqttClientService {
 //            System.exit(-1);
         } finally {
         	try {
-				disconnect(client);
+        		if(client != null) {
+        			disconnect(client);
+        		}
 			} catch (MqttException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
         	
         }
@@ -74,8 +76,7 @@ public class MqttClientService {
 		}
 		log.debug("Disconnected");
 	}
-	private void setConnOptiont(MqttConnectOptions connOpt) {
-		connOpt = new MqttConnectOptions();
+	private void setConnOption(MqttConnectOptions connOpt) {
 		connOpt.setCleanSession(true);
 		connOpt.setKeepAliveInterval(30);
 		connOpt.setUserName(MqttClientConstants.BROKER_ID);
