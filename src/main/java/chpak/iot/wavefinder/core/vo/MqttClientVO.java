@@ -6,6 +6,7 @@ public class MqttClientVO {
 	private String clientId;
 	private String topic;
 	private String message;
+	private String mqttServerType;
 	private int qos;
 	
 	
@@ -32,6 +33,12 @@ public class MqttClientVO {
 	}
 	public void setQos(int qos) {
 		this.qos = qos;
+	}
+	public String getMqttServerType() {
+		return mqttServerType;
+	}
+	public void setMqttServerType(String mqttServerType) {
+		this.mqttServerType = mqttServerType;
 	}
 	
 	

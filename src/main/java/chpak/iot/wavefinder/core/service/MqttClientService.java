@@ -10,6 +10,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import chpak.iot.wavefinder.core.constants.MqttClientConstants;
 import chpak.iot.wavefinder.core.vo.MqttClientVO;
@@ -24,16 +25,17 @@ public class MqttClientService {
         String content      = vo.getMessage();
         int qos             = vo.getQos();
         String broker       = MqttClientConstants.BROKER_URL;
+        String broker2       = MqttClientConstants.BROKER_URL2;
         
         MemoryPersistence persistence = new MemoryPersistence();
         MqttClient client = null;
         try {
-            client = new MqttClient(broker, clientId, persistence);
+            client = new MqttClient(StringUtils.isEmpty(vo.getMqttServerType())?broker:broker2, clientId, persistence);
             client.setTimeToWait(5000);
             MqttTopic topicObj = client.getTopic(topic);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             MqttDeliveryToken token = null;
-            setConnOption(connOpts);
+            setConnOption(connOpts, StringUtils.isEmpty(vo.getMqttServerType()));
             log.info("[Topic : "+topic+"]");
             log.info("[Connecting to broker: "+broker+"]");
             
@@ -76,11 +78,11 @@ public class MqttClientService {
 		}
 		log.debug("Disconnected");
 	}
-	private void setConnOption(MqttConnectOptions connOpt) {
+	private void setConnOption(MqttConnectOptions connOpt, boolean isBroker) {
 		connOpt.setCleanSession(true);
 		connOpt.setKeepAliveInterval(30);
-		connOpt.setUserName(MqttClientConstants.BROKER_ID);
-		connOpt.setPassword(MqttClientConstants.BROKER_PAWSSWD.toCharArray());
+		connOpt.setUserName(isBroker?MqttClientConstants.BROKER_ID:MqttClientConstants.BROKER_ID2);
+		connOpt.setPassword(isBroker?MqttClientConstants.BROKER_PAWSSWD.toCharArray():MqttClientConstants.BROKER_PAWSSWD2.toCharArray());
 	}
 	
 }

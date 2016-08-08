@@ -27,11 +27,6 @@ public class RelayController {
 		return returnTxt;
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public @ResponseBody String defaultController(HttpServletRequest request, HttpServletResponse response) {
-		return "Welcome Chpak' World";
-	}
-	
 	@RequestMapping("tag")
 	public @ResponseBody String requestFromTwitt(HttpServletRequest request, HttpServletResponse response) {
 		MqttClientVO vo = new MqttClientVO();
@@ -40,10 +35,12 @@ public class RelayController {
 		String topic = request.getParameter(MqttClientConstants.TOPIC_KEY);
 		String message = request.getParameter(MqttClientConstants.MESSAGE_KEY);
 		String qosStr = request.getParameter(MqttClientConstants.QOS_KEY);
+		String mqttServerType = request.getParameter(MqttClientConstants.MQTT_SERVER_TYPE_KEY);
 		vo.setClientId(StringUtils.isEmpty(clientId)?"":clientId);
 		vo.setTopic(StringUtils.isEmpty(topic)?"":topic);
 		vo.setMessage(StringUtils.isEmpty(message)?"":message);
 		vo.setQos(qosStr==null?0:Integer.parseInt(qosStr));
+		vo.setMqttServerType(StringUtils.isEmpty(mqttServerType)?"":mqttServerType);
 		mqttClientService.callMosquitto(vo);
 		return "Publish Completed";
 	}
